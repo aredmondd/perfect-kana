@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+    --color-brown: #513C2C;
+    --color-beaver: #AB947E;
+    --color-khaki: #C3A995;
+}
