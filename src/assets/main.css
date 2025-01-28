@@ -4,4 +4,10 @@
     --color-brown: #513C2C;
     --color-beaver: #AB947E;
     --color-khaki: #C3A995;
+
+    --font-gloock: 'Gloock', 'serif';
+
+    --color-background: var(--background-color);
+    --color-text: var(--text-color);
+    --color-accent: var(--accent-color);
 }
