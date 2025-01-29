@@ -10,13 +10,22 @@
 
         let currentRomaji = document.getElementById("romaji").innerText
 
-        borderClass.value = romaji === currentRomaji ? 'border-success text-success' : 'border-failure text-failure';
+        if (romaji === currentRomaji) {
+            borderClass.value = 'border-success text-success';
+            setTimeout(() => {
+                borderClass.value = "border-text text-text";
+                name.value = '';
+                emit("generate-new-kana");
+            }, 150);
 
-        setTimeout(() => {
-            borderClass.value = "border-text text-text";
-            name.value = '';
-            emit("generate-new-kana");
-        }, 350);
+        } else {
+            borderClass.value = 'border-failure text-failure';
+
+            setTimeout(() => {
+                borderClass.value = "border-text text-text";
+                name.value = '';
+            }, 150);
+        }
     };
 </script>
 
@@ -26,8 +35,8 @@
         type="text" 
         id="kanaInput"
         v-model="name"
-        size="10"
-        class="border-1 rounded-lg focus:outline-none mt-6 text-center opacity-50 transition-colors duration-250"
+        size="33"
+        class="border-b-1 focus:outline-none mt-12 text-center opacity-50 transition-colors duration-250"
         :class="borderClass"
         autocomplete="off"
         style="caret-color: transparent;"
