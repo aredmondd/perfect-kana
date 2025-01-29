@@ -4,8 +4,6 @@ import ThemeCard from './ThemeCard.vue';
 import themes from '../data/themes';
 import applyTheme from '../scripts/applyTheme';
 
-let currentTheme = localStorage.getItem("theme");
-
 </script>
 
 <template>

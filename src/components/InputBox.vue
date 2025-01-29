@@ -6,11 +6,12 @@
     const emit = defineEmits(["generate-new-kana"]);
 
     function formSubmit() {
-        const romaji = name.value.trim();
+        const text = name.value.trim();
 
-        let currentRomaji = document.getElementById("romaji").innerText
+        let currentRomaji = document.getElementById("romaji").innerText;
+        let currentKana = document.getElementById("kana").innerText;
 
-        if (romaji === currentRomaji) {
+        if (text === currentRomaji || text === currentKana) {
             borderClass.value = 'border-success text-success';
             setTimeout(() => {
                 borderClass.value = "border-text text-text";

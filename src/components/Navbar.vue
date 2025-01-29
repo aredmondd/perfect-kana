@@ -2,9 +2,10 @@
 import { RouterLink, RouterView } from 'vue-router'
 import applyTheme from '../scripts/applyTheme';
 import { onMounted } from 'vue';
+import themes from '@/data/themes';
 
 onMounted(() => {
-    applyTheme(JSON.parse(localStorage.getItem("theme")));
+    applyTheme(localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme")) : themes['mint']);
 });
 
 </script>
