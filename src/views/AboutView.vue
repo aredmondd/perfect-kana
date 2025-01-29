@@ -3,8 +3,7 @@ import ThemeSelect from '@/components/ThemeSelect.vue'
 </script>
 
 <template>
-  <div>
-    <h1 class="text-9xl">About</h1>
+  <div class="flex flex-col flex-1 items-center justify-center">
     <ThemeSelect />
   </div>
 </template>

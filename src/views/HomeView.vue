@@ -1,5 +1,9 @@
+<script setup>
+import KanaCard from '@/components/KanaCard.vue'
+</script>
+
 <template>
-  <main>
-    <h1 class="text-9xl">Home</h1>
-  </main>
+    <div class="flex flex-col flex-1 justify-center items-center">
+        <KanaCard />
+    </div>
 </template>
