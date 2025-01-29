@@ -1,9 +1,9 @@
 const themes = {
     mint: {
       name: 'mint',
-      background: '#F3F4F6',
-      text: '#1F2937',
-      accent: '#4CAF50',
+      background: '#161723',
+      text: '#b9c3f1',
+      accent: '#5CFF5F',
     },
     freedom: {
       name: 'freedom',

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted} from 'vue';
 import ThemeCard from './ThemeCard.vue';
-import themes from '../themes';
-import applyTheme from '../../applyTheme';
+import themes from '../data/themes';
+import applyTheme from '../scripts/applyTheme';
 
 let currentTheme = localStorage.getItem("theme");
 

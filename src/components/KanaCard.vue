@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import hiraganaKey from '@/hiragana-array';
+import hiraganaKey from '@/data/hiragana-array';
 
 const selectedHiragana = ref('');
 const selectedRomaji = ref('');

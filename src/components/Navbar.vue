@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import applyTheme from '../../applyTheme';
+import applyTheme from '../scripts/applyTheme';
 import { onMounted } from 'vue';
 
 onMounted(() => {
