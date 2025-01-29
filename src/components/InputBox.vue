@@ -3,7 +3,7 @@
 
     const name = ref('');
     const borderClass = ref('border-text bg-transparent bg-opacity-100');
-    const emit = defineEmits(["generate-new-kana"]);
+    const emit = defineEmits(["correct", "incorrect"]);
 
     function formSubmit() {
         const text = name.value.trim();
@@ -16,7 +16,7 @@
             setTimeout(() => {
                 borderClass.value = "border-text text-text";
                 name.value = '';
-                emit("generate-new-kana");
+                emit("correct");
             }, 150);
 
         } else {
@@ -25,6 +25,7 @@
             setTimeout(() => {
                 borderClass.value = "border-text text-text";
                 name.value = '';
+                emit("incorrect");
             }, 150);
         }
     };
