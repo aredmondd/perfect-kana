@@ -1,4 +1,4 @@
-const siteThemes = {
+const themes = {
     mint: {
       name: 'mint',
       background: '#F3F4F6',
@@ -31,4 +31,4 @@ const siteThemes = {
     },
   };
 
-export default siteThemes;
+export default themes;

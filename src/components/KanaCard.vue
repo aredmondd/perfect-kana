@@ -11,7 +11,6 @@ const generateNewHiragana = () => {
     selectedRomaji.value = hiraganaKey[randomIndex][1];
 };
 
-// Initialize on mount
 onMounted(generateNewHiragana);
 </script>
 

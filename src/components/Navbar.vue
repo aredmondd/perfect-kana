@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import applyTheme from '../../applyTheme';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+    applyTheme(JSON.parse(localStorage.getItem("theme")));
+});
+
 </script>
 
 <template>
