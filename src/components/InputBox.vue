@@ -1,21 +1,23 @@
 <script setup>
     import { ref, defineEmits } from "vue";
 
-    const name = ref('');
+    const props = defineProps({
+        currentHiragana: String, currentRomaji: String
+    });
+
+    const input = ref('');
     const borderClass = ref('border-text bg-transparent bg-opacity-100');
+
     const emit = defineEmits(["correct", "incorrect"]);
 
     function formSubmit() {
-        const text = name.value.trim();
+        const text = input.value.trim();
 
-        let currentRomaji = document.getElementById("romaji").innerText;
-        let currentKana = document.getElementById("kana").innerText;
-
-        if (text === currentRomaji || text === currentKana) {
+        if (text === props.currentRomaji || text === props.currentKana) {
             borderClass.value = 'border-success text-success';
             setTimeout(() => {
                 borderClass.value = "border-text text-text";
-                name.value = '';
+                input.value = '';
                 emit("correct");
             }, 150);
 
@@ -24,7 +26,7 @@
 
             setTimeout(() => {
                 borderClass.value = "border-text text-text";
-                name.value = '';
+                input.value = '';
                 emit("incorrect");
             }, 150);
         }
@@ -36,7 +38,7 @@
       <input 
         type="text" 
         id="kanaInput"
-        v-model="name"
+        v-model="input"
         size="33"
         class="border-b-1 focus:outline-none mt-12 text-center opacity-50 transition-colors duration-250"
         :class="borderClass"

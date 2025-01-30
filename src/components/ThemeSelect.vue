@@ -7,7 +7,7 @@ import applyTheme from '../scripts/applyTheme';
 </script>
 
 <template>
-    <div class="mt-16 flex gap-4">
+    <div class="grid grid-cols-10 gap-4 mx-24">
         <div v-for="theme in themes" :key=theme @click="applyTheme(theme)">
             <ThemeCard :theme="theme"/>
         </div>

@@ -46,3 +46,5 @@ const katakanaKey = [
 	["ヲ", "wo"],
 	["ン", "n"]
 ];
+
+export default katakanaKey;
