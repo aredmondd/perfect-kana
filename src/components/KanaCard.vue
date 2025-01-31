@@ -2,7 +2,9 @@
 import { ref, onMounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
+
 import InputBox from './InputBox.vue';
+import Timer from '@/components/Timer.vue';
 
 // if the user has never been to the site assume they wants basic basic hiragana
 let mode = ref('hiragana');
@@ -26,6 +28,14 @@ let incorrectAmount = ref(0);
 
 // track where we are in non-infinite modes
 let currentKanaIndex = ref(0);
+
+const timerRef = ref(null);
+
+function startTimer() {
+    if (mutations.value.timer && timerRef.value) {
+        timerRef.value.start(); // Calls start() on Timer when user types
+    }
+}
 
 // generate a new Kana if in infinite mode
 function generateNewRandomKana() {
@@ -168,7 +178,9 @@ onMounted(() => {
     <div class="flex gap-24 justify-between items-center" style="min-width: 300px;">
         <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ correctAmount }}</p>
         <div class="flex flex-col gap-6">
-            <p v-if="mutations.timer" class="opacity-50 text-center">0.00</p>
+            <div v-if="mutations.timer" class="text-center">
+                <Timer ref="timerRef"/>
+            </div>
             <div v-if="mutations.threeLives" class="flex items-center justify-center gap-2 opacity-50 text-center text-3xl">
                 <p id="heart-1">❤︎</p>
                 <p id="heart-2">❤︎</p>
@@ -185,7 +197,7 @@ onMounted(() => {
         <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ incorrectAmount }}</p>
     </div>
 
-    <InputBox @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
+    <InputBox @start-timer="startTimer" @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
 
     <div class="grid grid-cols-3 gap-4 text-center mt-6">
         <div :class="[mode === 'hiragana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
