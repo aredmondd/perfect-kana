@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
-import katakanaKey from '@/data/katakana-array';
+import katakanaKey from '@/data/katakana';
 import InputBox from './InputBox.vue';
 
 let mode = ref('hiragana');
@@ -104,7 +104,10 @@ function selectMutation(newMutation) {
     }
     else if (newMutation === 'dakuten') {
         mutations.value.dakuten = !mutations.value.dakuten;
-        if (mutations.value.dakuten) {
+        if (mutations.value.dakuten && mutations.value.hanDakuten) {
+            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten).concat(hiraganaData.hiraganaKeyWithHandakuten);
+        }
+        else if (mutations.value.dakuten) {
             practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten);
         }
         else {
@@ -113,7 +116,10 @@ function selectMutation(newMutation) {
     }
     else if (newMutation === 'hanDakuten') {
         mutations.value.hanDakuten = !mutations.value.hanDakuten;
-        if (mutations.value.hanDakuten) {
+        if (mutations.value.dakuten && mutations.value.hanDakuten) {
+            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten).concat(hiraganaData.hiraganaKeyWithHandakuten);
+        }
+        else if (mutations.value.hanDakuten) {
             practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithHandakuten);
         }
         else {
