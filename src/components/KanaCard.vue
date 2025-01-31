@@ -5,7 +5,6 @@ import katakanaData from '@/data/katakana';
 import InputBox from './InputBox.vue';
 
 // if the user has never been to the site assume they wants basic basic hiragana
-
 let mode = ref('hiragana');
 let mutations = ref({
     threeLives: false,
@@ -166,8 +165,8 @@ onMounted(() => {
 </script>
 
 <template>
-     <div class="flex gap-24 justify-between items-center">
-        <p class="opacity-25 p-2 text-right">{{ correctAmount }}</p>
+    <div class="flex gap-24 justify-between items-center" style="min-width: 300px;">
+        <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ correctAmount }}</p>
         <div class="flex flex-col gap-6">
             <p v-if="mutations.timer" class="opacity-50 text-center">0.00</p>
             <div v-if="mutations.threeLives" class="flex items-center justify-center gap-2 opacity-50 text-center text-3xl">
@@ -183,8 +182,8 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <p class="opacity-25 p-2 text-right">{{ incorrectAmount }}</p>
-     </div>
+        <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ incorrectAmount }}</p>
+    </div>
 
     <InputBox @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
 

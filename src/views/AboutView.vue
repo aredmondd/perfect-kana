@@ -1,9 +1,5 @@
-<script setup>
-import ThemeSelect from '@/components/ThemeSelect.vue'
-</script>
-
 <template>
   <div class="flex flex-col flex-1 items-center justify-center">
-    <h1 class="text-center">About!</h1>
+        <h1>some cool resources</h1>
   </div>
 </template>
