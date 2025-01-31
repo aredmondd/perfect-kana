@@ -2,7 +2,7 @@
     import { ref, defineEmits } from "vue";
 
     const props = defineProps({
-        currentHiragana: String, currentRomaji: String
+        currentKana: String, currentRomaji: String
     });
 
     const input = ref('');

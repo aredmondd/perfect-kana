@@ -1,4 +1,4 @@
-import themes from "@/data/themes";
+import themes from "./data/themes";
 
 function applyTheme(theme) {
     document.documentElement.style.setProperty('--background-color', themes[theme.name].background);

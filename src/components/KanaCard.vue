@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
-import katakanaKey from '@/data/katakana';
+import katakanaData from '@/data/katakana';
 import InputBox from './InputBox.vue';
+
+// if the user has never been to the site assume they wants basic basic hiragana
 
 let mode = ref('hiragana');
 let mutations = ref({
@@ -14,27 +16,37 @@ let mutations = ref({
     hanDakuten: false,
 });
 
+// the current array that the user will loop over/through, and the current 
 let practiceArray = hiraganaData.hiraganaKey;
-let selectedHiragana = ref('');
+let selectedKana = ref('');
 let selectedRomaji = ref('');
 
+// track the amount incorrect/correct
 let correctAmount = ref(0);
 let incorrectAmount = ref(0);
 
+// track where we are in non-infinite modes
 let currentKanaIndex = ref(0);
 
-function generateNewKana() {
+// generate a new Kana if in infinite mode
+function generateNewRandomKana() {
     const randomIndex = Math.floor(Math.random() * practiceArray.length);
-    selectedHiragana.value = practiceArray[randomIndex][0];
+    selectedKana.value = practiceArray[randomIndex][0];
     selectedRomaji.value = practiceArray[randomIndex][1];
 };
 
+// iterate to the next kana on regular modes
 function nextKana() {
-    selectedHiragana.value = practiceArray[currentKanaIndex.value][0];
+    if (mutations.value.infinite) {
+        generateNewRandomKana();
+        return;
+    }
+    selectedKana.value = practiceArray[currentKanaIndex.value][0];
     selectedRomaji.value = practiceArray[currentKanaIndex.value][1];
     currentKanaIndex.value++;
 }
 
+// go to the next kana if the gaame isn't over
 function correct() {
     if (currentKanaIndex.value == practiceArray.length) {
         alert('you are done. congrats!');
@@ -47,6 +59,7 @@ function correct() {
     }
 }
 
+// take off lives or add one to the incorrect counter
 function incorrect() {
     incorrectAmount.value++;
 
@@ -76,11 +89,11 @@ function selectMode(newMode) {
     }
     else if (mode.value === 'katakana') {
         localStorage.setItem('mode', 'katakana');
-        practiceArray = shuffle(katakanaKey);
+        practiceArray = shuffle(katakanaData.katakanaKey);
     }
     else if (mode.value === 'both') {
         localStorage.setItem('mode', 'both');
-        practiceArray = shuffle(hiraganaData.hiraganaKey.concat(katakanaKey));
+        practiceArray = shuffle(hiraganaData.hiraganaKey.concat(katakanaData.katakanaKey));
     }
 
     nextKana();
@@ -149,8 +162,7 @@ function shuffle(array) {
 
 onMounted(() => {
     selectMode(localStorage.getItem('mode'));
-}
-);
+});
 </script>
 
 <template>
@@ -166,7 +178,7 @@ onMounted(() => {
             <p v-if="!mutations.infinite" class="opacity-50 text-center">kana remaining: {{ practiceArray.length - correctAmount }}</p>
             <div class="border-4 border-b-8 border-accent rounded-4xl px-20 py-20 flex justify-center items-center">
                 <div class="flex flex-col items-center justify-center">
-                    <p class="font-NSJ text-9xl font-bold text-accent" id="kana">{{ selectedHiragana }}</p>
+                    <p class="font-NSJ text-9xl font-bold text-accent" id="kana">{{ selectedKana }}</p>
                     <p v-if="mutations.showRomaji" class="text-md mt-4 opacity-50 tracking-wide" id="romaji">{{ selectedRomaji }}</p>
                 </div>
             </div>
@@ -174,15 +186,12 @@ onMounted(() => {
         <p class="opacity-25 p-2 text-right">{{ incorrectAmount }}</p>
      </div>
 
-    <InputBox @correct="correct" @incorrect="incorrect" :currentHiragana="selectedHiragana" :currentRomaji="selectedRomaji"/>
+    <InputBox @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
 
     <div class="grid grid-cols-3 gap-4 text-center mt-6">
         <div :class="[mode === 'hiragana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMode('hiragana')">hiragana</div>
         <div :class="[mode === 'katakana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMode('katakana')">katakana</div>
         <div :class="[mode === 'both' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMode('both')">both</div>
-    </div>
-
-    <div class="grid grid-cols-3 gap-4 text-center mt-4">
         <div :class="[mutations.threeLives ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('3 lives')">3 lives</div>
         <div :class="[mutations.infinite ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('infinite')">infinite</div>
         <div :class="[mutations.showRomaji ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('show romaji')">show romaji</div>

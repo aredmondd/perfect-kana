@@ -4,6 +4,6 @@ import ThemeSelect from '@/components/ThemeSelect.vue'
 
 <template>
   <div class="flex flex-col flex-1 items-center justify-center">
-    <h1 class="text-center">About!</h1>
+    <ThemeSelect />
   </div>
 </template>

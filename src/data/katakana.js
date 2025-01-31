@@ -44,7 +44,40 @@ const katakanaKey = [
 	["ロ", "ro"],
 	["ワ", "wa"],
 	["ヲ", "wo"],
-	["ン", "n"]
+	["ン", "n"],
 ];
 
-export default katakanaKey;
+const katakanaKeyWithDakuten = [
+    ["ガ", "ga"],
+    ["ギ", "gi"],
+    ["グ", "gu"],
+    ["ゲ", "ge"],
+    ["ゴ", "go"],
+    ["ザ", "za"],
+    ["ジ", "ji"],
+    ["ズ", "zu"],
+    ["ゼ", "ze"],
+    ["ゾ", "zo"],
+    ["ダ", "da"],
+    ["ヂ", "ji"],
+    ["ヅ", "zu"],
+    ["デ", "de"],
+    ["ド", "do"],
+    ["バ", "ba"],
+    ["ビ", "bi"],
+    ["ブ", "bu"],
+    ["ベ", "be"],
+    ["ボ", "bo"]
+];
+
+const katakanaKeyWithHandakuten = [
+    ["パ", "pa"],
+    ["ピ", "pi"],
+    ["プ", "pu"],
+    ["ペ", "pe"],
+    ["ポ", "po"]
+];
+
+const katakanaData = { katakanaKey, katakanaKeyWithDakuten, katakanaKeyWithHandakuten };
+
+export default katakanaData;
