@@ -37,6 +37,12 @@ function startTimer() {
     }
 }
 
+function stopTimer() {
+    if (timerRef.value) {
+        timerRef.value.stop();
+    }
+}
+
 // generate a new Kana if in infinite mode
 function generateNewRandomKana() {
     const randomIndex = Math.floor(Math.random() * practiceArray.length);
@@ -87,6 +93,7 @@ function incorrect() {
 }
 
 function selectMode(newMode) {
+    stopTimer();
     mode.value = newMode;
 
     correctAmount.value = 0;
@@ -109,6 +116,7 @@ function selectMode(newMode) {
 }
 
 function selectMutation(newMutation) {
+    stopTimer();
     correctAmount.value = 0;
     incorrectAmount.value = 0;
 

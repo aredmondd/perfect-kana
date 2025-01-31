@@ -14,6 +14,15 @@ function start() {
     }
 }
 
+function stop() {
+  if (stopwatchInterval) {
+    clearInterval(stopwatchInterval);
+    stopwatchInterval = null;
+    elapsedPausedTime = 0;
+    displayTime.value = "0.00";
+  }
+}
+
 function updateStopwatch() {
     let elapsedTime = performance.now() - startTime; // More accurate than Date.now()
     
@@ -37,7 +46,7 @@ function pad(number) {
     return number.toString().padStart(2, "0"); // Ensures two-digit formatting
 }
 
-defineExpose({ start });
+defineExpose({ start, stop });
 </script>
 
 <template>
