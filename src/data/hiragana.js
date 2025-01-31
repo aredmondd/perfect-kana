@@ -1,188 +1,88 @@
-const hiraganaKey = {
-  "あ": {
-    "hiragana": "あ",
-    "romaji": "a"
-  },
-  "い": {
-    "hiragana": "い",
-    "romaji": "i"
-  },
-  "う": {
-    "hiragana": "う",
-    "romaji": "u"
-  },
-  "え": {
-    "hiragana": "え",
-    "romaji": "e"
-  },
-  "お": {
-    "hiragana": "お",
-    "romaji": "o"
-  },
-  "か": {
-    "hiragana": "か",
-    "romaji": "ka"
-  },
-  "き": {
-    "hiragana": "き",
-    "romaji": "ki"
-  },
-  "く": {
-    "hiragana": "く",
-    "romaji": "ku"
-  },
-  "け": {
-    "hiragana": "け",
-    "romaji": "ke"
-  },
-  "こ": {
-    "hiragana": "こ",
-    "romaji": "ko"
-  },
-  "さ": {
-    "hiragana": "さ",
-    "romaji": "sa"
-  },
-  "し": {
-    "hiragana": "し",
-    "romaji": "shi"
-  },
-  "す": {
-    "hiragana": "す",
-    "romaji": "su"
-  },
-  "せ": {
-    "hiragana": "せ",
-    "romaji": "se"
-  },
-  "そ": {
-    "hiragana": "そ",
-    "romaji": "so"
-  },
-  "た": {
-    "hiragana": "た",
-    "romaji": "ta"
-  },
-  "ち": {
-    "hiragana": "ち",
-    "romaji": "chi"
-  },
-  "つ": {
-    "hiragana": "つ",
-    "romaji": "tsu"
-  },
-  "て": {
-    "hiragana": "て",
-    "romaji": "te"
-  },
-  "と": {
-    "hiragana": "と",
-    "romaji": "to"
-  },
-  "な": {
-    "hiragana": "な",
-    "romaji": "na"
-  },
-  "に": {
-    "hiragana": "に",
-    "romaji": "ni"
-  },
-  "ぬ": {
-    "hiragana": "ぬ",
-    "romaji": "nu"
-  },
-  "ね": {
-    "hiragana": "ね",
-    "romaji": "ne"
-  },
-  "の": {
-    "hiragana": "の",
-    "romaji": "no"
-  },
-  "は": {
-    "hiragana": "は",
-    "romaji": "ha"
-  },
-  "ひ": {
-    "hiragana": "ひ",
-    "romaji": "hi"
-  },
-  "ふ": {
-    "hiragana": "ふ",
-    "romaji": "fu/hu"
-  },
-  "へ": {
-    "hiragana": "へ",
-    "romaji": "he"
-  },
-  "ほ": {
-    "hiragana": "ほ",
-    "romaji": "ho"
-  },
-  "ま": {
-    "hiragana": "ま",
-    "romaji": "ma"
-  },
-  "み": {
-    "hiragana": "み",
-    "romaji": "mi"
-  },
-  "む": {
-    "hiragana": "む",
-    "romaji": "mu"
-  },
-  "め": {
-    "hiragana": "め",
-    "romaji": "me"
-  },
-  "も": {
-    "hiragana": "も",
-    "romaji": "mo"
-  },
-  "や": {
-    "hiragana": "や",
-    "romaji": "ya"
-  },
-  "ゆ": {
-    "hiragana": "ゆ",
-    "romaji": "yu"
-  },
-  "よ": {
-    "hiragana": "よ",
-    "romaji": "yo"
-  },
-  "ら": {
-    "hiragana": "ら",
-    "romaji": "ra"
-  },
-  "り": {
-    "hiragana": "り",
-    "romaji": "ri"
-  },
-  "る": {
-    "hiragana": "る",
-    "romaji": "ru"
-  },
-  "れ": {
-    "hiragana": "れ",
-    "romaji": "re"
-  },
-  "ろ": {
-    "hiragana": "ろ",
-    "romaji": "ro"
-  },
-  "わ": {
-    "hiragana": "わ",
-    "romaji": "wa"
-  },
-  "を": {
-    "hiragana": "を",
-    "romaji": "wo"
-  },
-  "ん": {
-    "hiragana": "ん",
-    "romaji": "n"
-  }
-};
+const hiraganaKey = [
+	["あ", "a"],
+	["い", "i"],
+	["う", "u"],
+	["え", "e"],
+	["お", "o"],
+	["か", "ka"],
+	["き", "ki"],
+	["く", "ku"],
+	["け", "ke"],
+	["こ", "ko"],
+	["さ", "sa"],
+	["し", "shi"],
+	["す", "su"],
+	["せ", "se"],
+	["そ", "so"],
+	["た", "ta"],
+	["ち", "chi"],
+	["つ", "tsu"],
+	["て", "te"],
+	["と", "to"],
+	["な", "na"],
+	["に", "ni"],
+	["ぬ", "nu"],
+	["ね", "ne"],
+	["の", "no"],
+	["は", "ha"],
+	["ひ", "hi"],
+	["ふ", "fu"],
+	["へ", "he"],
+	["ほ", "ho"],
+	["ま", "ma"],
+	["み", "mi"],
+	["む", "mu"],
+	["め", "me"],
+	["も", "mo"],
+	["や", "ya"],
+	["ゆ", "yu"],
+	["よ", "yo"],
+	["ら", "ra"],
+	["り", "ri"],
+	["る", "ru"],
+	["れ", "re"],
+	["ろ", "ro"],
+	["わ", "wa"],
+	["を", "wo"],
+	["ん", "n"],
+];
 
-export default hiraganaKey;
+const hiraganaKeyWithDakuten = [
+    ["が", "ga"],
+    ["ぎ", "gi"],
+    ["ぐ", "gu"],
+    ["げ", "ge"],
+    ["ご", "go"],
+    ["ざ", "za"],
+    ["じ", "ji"],
+    ["ず", "zu"],
+    ["ぜ", "ze"],
+    ["ぞ", "zo"],
+    ["だ", "da"],
+    ["ぢ", "ji"],
+    ["づ", "zu"],
+    ["で", "de"],
+    ["ど", "do"],
+    ["ば", "ba"],
+    ["び", "bi"],
+    ["ぶ", "bu"],
+    ["べ", "be"],
+    ["ぼ", "bo"],
+    ["ぱ", "pa"],
+    ["ぴ", "pi"],
+    ["ぷ", "pu"],
+    ["ぺ", "pe"],
+    ["ぽ", "po"]
+];
+
+const hiraganaKeyWithHandakuten = [
+    ["ぱ", "pa"],
+    ["ぴ", "pi"],
+    ["ぷ", "pu"],
+    ["ぺ", "pe"],
+    ["ぽ", "po"]
+];
+
+const hiraganaData = { hiraganaKey, hiraganaKeyWithDakuten, hiraganaKeyWithHandakuten };
+
+export default hiraganaData;

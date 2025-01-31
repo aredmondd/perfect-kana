@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import hiraganaKey from '@/data/hiragana-array';
+import hiraganaData from '@/data/hiragana';
 import katakanaKey from '@/data/katakana-array';
 import InputBox from './InputBox.vue';
 
@@ -10,9 +10,11 @@ let mutations = ref({
     infinite: false,
     showRomaji: false,
     timer: false,
+    dakuten: false,
+    hanDakuten: false,
 });
 
-let practiceArray = hiraganaKey;
+let practiceArray = hiraganaData.hiraganaKey;
 let selectedHiragana = ref('');
 let selectedRomaji = ref('');
 
@@ -34,13 +36,32 @@ function nextKana() {
 }
 
 function correct() {
-    nextKana();
-    correctAmount.value++;
-
+    if (currentKanaIndex.value == practiceArray.length) {
+        alert('you are done. congrats!');
+        currentKanaIndex.value = 0;
+        selectMode(mode.value);
+    }
+    else {
+        nextKana();
+        correctAmount.value++;
+    }
 }
 
 function incorrect() {
     incorrectAmount.value++;
+
+    if (mutations.value.threeLives == true) {
+        if (incorrectAmount.value == 3) {
+            document.getElementById("heart-1").innerText = "♡";
+            alert('game over (sad)');
+        }
+        else if (incorrectAmount.value == 2) {
+            document.getElementById("heart-2").innerText = "♡";
+        }
+        else if (incorrectAmount.value == 1) {
+            document.getElementById("heart-3").innerText = "♡";
+        }
+    }
 }
 
 function selectMode(newMode) {
@@ -51,38 +72,58 @@ function selectMode(newMode) {
 
     if (mode.value === 'hiragana') {
         localStorage.setItem('mode', 'hiragana');
-        practiceArray = shuffle(hiraganaKey);
-        nextKana();
+        practiceArray = shuffle(hiraganaData.hiraganaKey);
     }
     else if (mode.value === 'katakana') {
         localStorage.setItem('mode', 'katakana');
         practiceArray = shuffle(katakanaKey);
-        nextKana();
     }
     else if (mode.value === 'both') {
         localStorage.setItem('mode', 'both');
-        practiceArray = shuffle(hiraganaKey.concat(katakanaKey));
-        nextKana();
+        practiceArray = shuffle(hiraganaData.hiraganaKey.concat(katakanaKey));
     }
+
+    nextKana();
 }
 
 function selectMutation(newMutation) {
+    correctAmount.value = 0;
+    incorrectAmount.value = 0;
+
     if (newMutation === '3 lives') {
         mutations.value.threeLives = !mutations.value.threeLives;
-        // show the 3 lives
     }
     else if (newMutation === 'infinite') {
         mutations.value.infinite = !mutations.value.infinite;
-        // shuffle the array like old generateNewKana()
     }
     else if (newMutation === 'show romaji') {
         mutations.value.showRomaji = !mutations.value.showRomaji;
-        // shuffle the array like old generateNewKana()
     }
     else if (newMutation === 'timer') {
         mutations.value.timer = !mutations.value.timer;
-        // shuffle the array like old generateNewKana()
     }
+    else if (newMutation === 'dakuten') {
+        mutations.value.dakuten = !mutations.value.dakuten;
+        if (mutations.value.dakuten) {
+            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten);
+        }
+        else {
+            practiceArray = hiraganaData.hiraganaKey;
+        }
+    }
+    else if (newMutation === 'hanDakuten') {
+        mutations.value.hanDakuten = !mutations.value.hanDakuten;
+        if (mutations.value.hanDakuten) {
+            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithHandakuten);
+        }
+        else {
+            practiceArray = hiraganaData.hiraganaKey;
+        }
+    }
+
+    localStorage.setItem('mode', mode.value);
+    practiceArray = shuffle(practiceArray);
+    nextKana();
 }
 
 function shuffle(array) {
@@ -112,9 +153,9 @@ onMounted(() => {
         <div class="flex flex-col gap-6">
             <p v-if="mutations.timer" class="opacity-50 text-center">0.00</p>
             <div v-if="mutations.threeLives" class="flex items-center justify-center gap-2 opacity-50 text-center text-3xl">
-                <p>❤︎</p> <!--♡-->
-                <p>❤︎</p>
-                <p>❤︎</p>
+                <p id="heart-1">❤︎</p>
+                <p id="heart-2">❤︎</p>
+                <p id="heart-3">❤︎</p>
             </div>
             <p v-if="!mutations.infinite" class="opacity-50 text-center">kana remaining: {{ practiceArray.length - correctAmount }}</p>
             <div class="border-4 border-b-8 border-accent rounded-4xl px-20 py-20 flex justify-center items-center">
@@ -135,10 +176,12 @@ onMounted(() => {
         <div :class="[mode === 'both' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMode('both')">both</div>
     </div>
 
-    <div class="flex gap-4 text-center mt-4">
+    <div class="grid grid-cols-3 gap-4 text-center mt-4">
         <div :class="[mutations.threeLives ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('3 lives')">3 lives</div>
         <div :class="[mutations.infinite ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('infinite')">infinite</div>
         <div :class="[mutations.showRomaji ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('show romaji')">show romaji</div>
         <div :class="[mutations.timer ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('timer')">timer</div>
+        <div :class="[mutations.dakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('dakuten')">dakuten</div>
+        <div :class="[mutations.hanDakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer" @click="selectMutation('hanDakuten')">han-dakuten</div>
     </div>
 </template>
