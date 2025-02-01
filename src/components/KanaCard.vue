@@ -8,6 +8,7 @@ import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
 
 // if the user has never been to the site assume they wants basic basic hiragana
+let theme = ref(JSON.parse(localStorage.getItem('theme')).name);
 let mode = ref('hiragana');
 let mutations = ref({
     threeLives: false,
@@ -216,6 +217,9 @@ function handleKeyDown(event) {
         zen.value = !zen.value;
         eventBus.emit('toggle-zen', zen.value);
     }
+    else if (event.key.toLowerCase() === 'escape') {
+        console.log('esc');
+    }
 }
 
 
@@ -277,5 +281,9 @@ onMounted(() => {
         <div :class="[mutations.hanDakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('hanDakuten')">han-dakuten</div>
     </div>
 
-    <p v-if="!zen" :class="correctAmount < 1 ? 'opacity-25' : 'opacity-0' " class="mt-12">press <span class="bg-text/25 text-bg px-1 rounded-md">cmd</span> + <span class="bg-text/25 text-bg px-1 rounded-md">h</span> to enter/exit zen mode</p>
+    <div class="mt-12 flex items-center gap-14">
+        <p v-if="!zen" :class="correctAmount < 1 ? 'opacity-25' : 'opacity-0' ">press <span class="bg-text/25 text-bg px-1 rounded-md">cmd</span> + <span class="bg-text/25 text-bg px-1 rounded-md">h</span> to enter/exit zen mode</p>
+        <p v-if="!zen" :class="correctAmount < 1 ? 'opacity-25' : 'opacity-0' " >press <span class="bg-text/25 text-bg px-1 rounded-md">esc</span> to reset</p>
+    </div>
+    <!-- <p v-if="!zen" :class="correctAmount < 1 ? 'opacity-25' : 'opacity-0' " class="flex items-center gap-1"><span class="material-symbols-outlined">palette</span>{{ theme }}</p> -->
 </template>
