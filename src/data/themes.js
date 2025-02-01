@@ -36,12 +36,6 @@ const themes = {
       text: '#FCE4EC',
       accent: '#FF4081',
     },
-    ruby: {
-      name: 'ruby',
-      background: '#D32F2F',
-      text: '#FFFFFF',
-      accent: '#FF4081',
-    },
     mocha: {
       name: 'mocha',
       background: '#4E342E',
@@ -54,6 +48,12 @@ const themes = {
       text: '#FFF3E0',
       accent: '#D4A373',
     },
+    cavs: {
+        name: 'cavs',
+        background: '#860038',
+        text: '#000000',
+        accent: '#FDBB30',
+    },
   
     // — Orange Group —
     rusted: {
@@ -62,11 +62,11 @@ const themes = {
       text: '#D4A373',
       accent: '#FF4500',
     },
-    sunset: {
-      name: 'sunset',
-      background: '#FF4500',
-      text: '#FFFFFF',
-      accent: '#FFD700',
+    ogcavs: {
+        name: 'ogcavs',
+        background: '#27251F',
+        text: '#5C88DA',
+        accent: '#E35205',
     },
     lemon: {
       name: 'lemon',
@@ -263,7 +263,7 @@ const themes = {
       background: '#2E2E2E',
       text: '#CCCCCC',
       accent: '#757575',
-    }
+    },
   };
   
   export default themes;
