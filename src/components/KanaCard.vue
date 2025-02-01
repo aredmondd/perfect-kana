@@ -58,19 +58,21 @@ function nextKana() {
     }
     selectedKana.value = practiceArray[currentKanaIndex.value][0];
     selectedRomaji.value = practiceArray[currentKanaIndex.value][1];
-    currentKanaIndex.value++;
 }
 
 // go to the next kana if the gaame isn't over
 function correct() {
-    if (currentKanaIndex.value == practiceArray.length) {
-        alert('you are done. congrats!');
-        currentKanaIndex.value = 0;
-        selectMode(mode.value);
-    }
-    else {
-        nextKana();
+    if (currentKanaIndex.value >= practiceArray.length - 1) {
         correctAmount.value++;
+        setTimeout(() => {
+            alert('you are done. congrats!');
+            currentKanaIndex.value = 0;
+            selectMode(mode.value);
+        }, 100)
+    } else {
+        correctAmount.value++;
+        currentKanaIndex.value++;
+        nextKana();
     }
 }
 
@@ -81,8 +83,13 @@ function incorrect() {
     if (mutations.value.threeLives == true) {
         if (incorrectAmount.value == 3) {
             document.getElementById("heart-1").innerText = "♡";
-            alert('game over (sad)');
-            selectMode(mode.value);
+            setTimeout(() => {
+                alert('game over (sad)');
+                document.getElementById("heart-1").innerText = "❤︎";
+                document.getElementById("heart-2").innerText = "❤︎";
+                document.getElementById("heart-3").innerText = "❤︎";
+                selectMode(mode.value);
+            }, 1000);
         }
         else if (incorrectAmount.value == 2) {
             document.getElementById("heart-2").innerText = "♡";
@@ -99,6 +106,8 @@ function selectMode(newMode) {
 
     correctAmount.value = 0;
     incorrectAmount.value = 0;
+
+    currentKanaIndex.value = 0;
 
     if (mode.value === 'hiragana') {
         localStorage.setItem('mode', 'hiragana');
@@ -144,6 +153,7 @@ function selectMutation(newMutation) {
 
     localStorage.setItem('mode', mode.value);
     practiceArray = shuffle(practiceArray);
+    currentKanaIndex.value = 0;
     nextKana();
 }
 
@@ -229,7 +239,7 @@ onMounted(() => {
 
     <InputBox @start-timer="startTimer" @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
 
-    <div class="grid grid-cols-3 gap-4 text-center mt-6">
+    <!-- <div class="grid grid-cols-3 gap-4 text-center mt-6">
         <div :class="[mode === 'hiragana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
         <div :class="[mode === 'katakana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('katakana')">katakana</div>
         <div :class="[mode === 'both' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('both')">both</div>
@@ -239,5 +249,20 @@ onMounted(() => {
         <div :class="[mutations.timer ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('timer')">timer</div>
         <div :class="[mutations.dakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('dakuten')">dakuten</div>
         <div :class="[mutations.hanDakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('hanDakuten')">han-dakuten</div>
+    </div> -->
+
+    <div class="flex gap-6 mt-10 rounded-md px-6 py-1">
+        <div :class="[mode === 'hiragana' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
+        <div :class="[mode === 'katakana' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('katakana')">katakana</div>
+        <div :class="[mode === 'both' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('both')">both</div>
+    </div>
+
+    <div class="flex gap-6 mt-2 rounded-md px-6 py-1">
+        <div :class="[mutations.threeLives ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('3 lives')">3 lives</div>
+        <div :class="[mutations.infinite ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('infinite')">infinite</div>
+        <div :class="[mutations.showRomaji ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('show romaji')">show romaji</div>
+        <div :class="[mutations.timer ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('timer')">timer</div>
+        <div :class="[mutations.dakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('dakuten')">dakuten</div>
+        <div :class="[mutations.hanDakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('hanDakuten')">han-dakuten</div>
     </div>
 </template>

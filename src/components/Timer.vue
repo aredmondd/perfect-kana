@@ -24,7 +24,7 @@ function stop() {
 }
 
 function updateStopwatch() {
-    let elapsedTime = performance.now() - startTime; // More accurate than Date.now()
+    let elapsedTime = performance.now() - startTime;
     
     let milliseconds = (elapsedTime % 1000) / 10; // Convert to two decimal places
     let seconds = Math.floor(elapsedTime / 1000) % 60;
