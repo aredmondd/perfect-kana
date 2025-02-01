@@ -47,7 +47,7 @@ const hiraganaKey = [
 	["ん", "n"],
 ];
 
-const hiraganaKeyWithDakuten = [
+const dakuten = [
     ["が", "ga"],
     ["ぎ", "gi"],
     ["ぐ", "gu"],
@@ -75,7 +75,7 @@ const hiraganaKeyWithDakuten = [
     ["ぽ", "po"]
 ];
 
-const hiraganaKeyWithHandakuten = [
+const handakuten = [
     ["ぱ", "pa"],
     ["ぴ", "pi"],
     ["ぷ", "pu"],
@@ -83,6 +83,6 @@ const hiraganaKeyWithHandakuten = [
     ["ぽ", "po"]
 ];
 
-const hiraganaData = { hiraganaKey, hiraganaKeyWithDakuten, hiraganaKeyWithHandakuten };
+const hiraganaData = { hiraganaKey, dakuten, handakuten };
 
 export default hiraganaData;

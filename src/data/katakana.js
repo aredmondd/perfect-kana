@@ -47,7 +47,7 @@ const katakanaKey = [
 	["ン", "n"],
 ];
 
-const katakanaKeyWithDakuten = [
+const dakuten = [
     ["ガ", "ga"],
     ["ギ", "gi"],
     ["グ", "gu"],
@@ -70,7 +70,7 @@ const katakanaKeyWithDakuten = [
     ["ボ", "bo"]
 ];
 
-const katakanaKeyWithHandakuten = [
+const handakuten = [
     ["パ", "pa"],
     ["ピ", "pi"],
     ["プ", "pu"],
@@ -78,6 +78,6 @@ const katakanaKeyWithHandakuten = [
     ["ポ", "po"]
 ];
 
-const katakanaData = { katakanaKey, katakanaKeyWithDakuten, katakanaKeyWithHandakuten };
+const katakanaData = { katakanaKey, dakuten, handakuten };
 
 export default katakanaData;

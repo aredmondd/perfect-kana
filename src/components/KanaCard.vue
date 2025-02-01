@@ -33,7 +33,7 @@ const timerRef = ref(null);
 
 function startTimer() {
     if (mutations.value.timer && timerRef.value) {
-        timerRef.value.start(); // Calls start() on Timer when user types
+        timerRef.value.start();
     }
 }
 
@@ -82,6 +82,7 @@ function incorrect() {
         if (incorrectAmount.value == 3) {
             document.getElementById("heart-1").innerText = "♡";
             alert('game over (sad)');
+            selectMode(mode.value);
         }
         else if (incorrectAmount.value == 2) {
             document.getElementById("heart-2").innerText = "♡";
@@ -101,15 +102,15 @@ function selectMode(newMode) {
 
     if (mode.value === 'hiragana') {
         localStorage.setItem('mode', 'hiragana');
-        practiceArray = shuffle(hiraganaData.hiraganaKey);
+        updatePracticeArray();
     }
     else if (mode.value === 'katakana') {
         localStorage.setItem('mode', 'katakana');
-        practiceArray = shuffle(katakanaData.katakanaKey);
+        updatePracticeArray();
     }
     else if (mode.value === 'both') {
         localStorage.setItem('mode', 'both');
-        practiceArray = shuffle(hiraganaData.hiraganaKey.concat(katakanaData.katakanaKey));
+        updatePracticeArray();
     }
 
     nextKana();
@@ -134,27 +135,11 @@ function selectMutation(newMutation) {
     }
     else if (newMutation === 'dakuten') {
         mutations.value.dakuten = !mutations.value.dakuten;
-        if (mutations.value.dakuten && mutations.value.hanDakuten) {
-            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten).concat(hiraganaData.hiraganaKeyWithHandakuten);
-        }
-        else if (mutations.value.dakuten) {
-            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten);
-        }
-        else {
-            practiceArray = hiraganaData.hiraganaKey;
-        }
+        updatePracticeArray();
     }
     else if (newMutation === 'hanDakuten') {
         mutations.value.hanDakuten = !mutations.value.hanDakuten;
-        if (mutations.value.dakuten && mutations.value.hanDakuten) {
-            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithDakuten).concat(hiraganaData.hiraganaKeyWithHandakuten);
-        }
-        else if (mutations.value.hanDakuten) {
-            practiceArray = hiraganaData.hiraganaKey.concat(hiraganaData.hiraganaKeyWithHandakuten);
-        }
-        else {
-            practiceArray = hiraganaData.hiraganaKey;
-        }
+        updatePracticeArray();
     }
 
     localStorage.setItem('mode', mode.value);
@@ -162,6 +147,7 @@ function selectMutation(newMutation) {
     nextKana();
 }
 
+// shuffle an array (is 2d in this case)
 function shuffle(array) {
     let currentIndex = array.length
     
@@ -176,6 +162,42 @@ function shuffle(array) {
 
     return array;
 }
+
+function updatePracticeArray() {
+  let arrays = [];
+
+    if (mode.value === 'hiragana') {
+        arrays.push(hiraganaData.hiraganaKey);
+        if (mutations.value.dakuten) {
+            arrays.push(hiraganaData.dakuten);
+        }
+        if (mutations.value.hanDakuten) {
+            arrays.push(hiraganaData.handakuten);
+        }
+    } else if (mode.value === 'katakana') {
+        arrays.push(katakanaData.katakanaKey);
+        if (mutations.value.dakuten) {
+            arrays.push(katakanaData.dakuten);
+        }
+        if (mutations.value.hanDakuten) {
+            arrays.push(katakanaData.handakuten);
+        }
+    } else if (mode.value === 'both') {
+        arrays.push(katakanaData.katakanaKey);
+        arrays.push(hiraganaData.hiraganaKey);
+        if (mutations.value.dakuten) {
+            arrays.push(katakanaData.dakuten);
+            arrays.push(hiraganaData.dakuten);
+        }
+        if (mutations.value.hanDakuten) {
+            arrays.push(katakanaData.handakuten);
+            arrays.push(hiraganaData.handakuten);
+        }
+    }
+
+  practiceArray = [].concat(...arrays);
+}
+
 
 onMounted(() => {
     selectMode(localStorage.getItem('mode'));
