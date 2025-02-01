@@ -1,6 +1,6 @@
 # perfect-kana
 
-perfect kana is a kana learning/practicing web app designed, built, and published in 1 week.
+perfect kana is a kana learning/practicing web app designed, built, and published in 1 week. check out the live version [here](www.perfect-kana.com)
 
 ## Why is perfect kana?
 perfect kana aims to make learning kana easy, fun, and most importantly - customizable. With 3 modes, 6 mutations, and over 40 themes, perfect kana offers THE most customizable way to learn kana.
