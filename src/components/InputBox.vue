@@ -40,11 +40,10 @@
         id="kanaInput"
         v-model="input"
         size="33"
-        class="border-b-1 focus:outline-none mt-12 text-center opacity-50 transition-colors duration-250"
+        class="border-b-1 focus:outline-none mt-12 text-center opacity-50 transition-colors duration-250 text-lg"
         :class="borderClass"
         @input="emit('start-timer')"
         autocomplete="off"
-        style="caret-color: transparent;"
         data-1p-ignore
         required
         autofocus
