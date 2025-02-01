@@ -58,7 +58,7 @@ here are some things i still want to implement into perfect kana
 - [ ] secret unlockable themes (practice 1000 kana, sub 1-minute for hiragana, etc.)
 - [ ] select columns of kana you want to appear
 - [ ] custom themes + fonts
-- [ ] zen mode
+- [x] zen mode
 - [ ] randomized theme
 - [ ] mistakes mode (practice kana you suck at)
 

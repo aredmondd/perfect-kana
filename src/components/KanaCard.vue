@@ -220,7 +220,7 @@ function handleKeyDown(event) {
 
 
 onMounted(() => {
-    selectMode(localStorage.getItem('mode'));
+    selectMode(localStorage.getItem('mode') ? localStorage.getItem('mode') : 'hiragana');
     window.addEventListener('keydown', handleKeyDown);
 });
 </script>

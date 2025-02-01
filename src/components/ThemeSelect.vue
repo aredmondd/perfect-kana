@@ -14,9 +14,10 @@ function applyAndCheckTheme(theme) {
 </script>
 
 <template>
-    <div class="grid grid-cols-6 gap-4 mx-24">
-        <div v-for="theme in themes" :key=theme @click="applyAndCheckTheme(theme)">
+    <div class="flex flex-wrap gap-4">
+        <div v-for="theme in themes" :key=theme @click="applyAndCheckTheme(theme)" class="min-w-[100px]">
             <ThemeCard :theme="theme" :isActiveTheme="localStorageThemeName == theme.name"/>
         </div>
+        <p class="text-text opacity-25 mt-3">... and more to come :)</p>
     </div>
 </template>
