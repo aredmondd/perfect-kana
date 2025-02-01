@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
+import { eventBus } from '@/eventBus';
 
 import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
@@ -16,6 +17,7 @@ let mutations = ref({
     dakuten: false,
     hanDakuten: false,
 });
+let zen = ref(false);
 
 // the current array that the user will loop over/through, and the current 
 let practiceArray = hiraganaData.hiraganaKey;
@@ -208,9 +210,18 @@ function updatePracticeArray() {
   practiceArray = [].concat(...arrays);
 }
 
+function handleKeyDown(event) {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'h') {
+        event.preventDefault();
+        zen.value = !zen.value;
+        eventBus.emit('toggle-zen', zen.value);
+    }
+}
+
 
 onMounted(() => {
     selectMode(localStorage.getItem('mode'));
+    window.addEventListener('keydown', handleKeyDown);
 });
 </script>
 
@@ -251,13 +262,13 @@ onMounted(() => {
         <div :class="[mutations.hanDakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('hanDakuten')">han-dakuten</div>
     </div> -->
 
-    <div class="flex gap-6 mt-10 rounded-md px-6 py-1">
+    <div v-if="!zen" class="flex gap-6 mt-10 rounded-md px-6 py-1">
         <div :class="[mode === 'hiragana' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
         <div :class="[mode === 'katakana' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('katakana')">katakana</div>
         <div :class="[mode === 'both' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('both')">both</div>
     </div>
 
-    <div class="flex gap-6 mt-2 rounded-md px-6 py-1">
+    <div v-if="!zen" class="flex gap-6 mt-2 rounded-md px-6 py-1">
         <div :class="[mutations.threeLives ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('3 lives')">3 lives</div>
         <div :class="[mutations.infinite ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('infinite')">infinite</div>
         <div :class="[mutations.showRomaji ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('show romaji')">show romaji</div>
@@ -265,4 +276,6 @@ onMounted(() => {
         <div :class="[mutations.dakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('dakuten')">dakuten</div>
         <div :class="[mutations.hanDakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('hanDakuten')">han-dakuten</div>
     </div>
+
+    <p v-if="!zen" :class="correctAmount < 1 ? 'opacity-25' : 'opacity-0' " class="mt-12">press <span class="bg-text/25 text-bg px-1 rounded-md">cmd</span> + <span class="bg-text/25 text-bg px-1 rounded-md">h</span> to enter/exit zen mode</p>
 </template>
