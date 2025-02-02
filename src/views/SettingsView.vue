@@ -1,7 +1,6 @@
 <script setup>
 import ThemeSelect from '@/components/ThemeSelect.vue';
 import { ref, watch } from 'vue';
-import { eventBus } from '@/eventBus';
 
 let showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
 let showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);

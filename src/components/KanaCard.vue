@@ -222,8 +222,10 @@ function handleKeyDown(event) {
     else if (event.key.toLowerCase() === 'escape') {
         event.preventDefault();
         selectMode(localStorage.getItem('mode') ? localStorage.getItem('mode') : 'hiragana');
-        zen.value = !zen.value;
-        eventBus.emit('toggle-zen', zen.value);
+        if (zen.value == true) {
+            zen.value = !zen.value;
+            eventBus.emit('toggle-zen', zen.value);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue';
 import themes from '@/data/themes';
 import applyTheme from '@/applyTheme';
