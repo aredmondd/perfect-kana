@@ -36,6 +36,8 @@ const timerRef = ref(null);
 let showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
 let showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
 
+let incorrectAnimation = ref(false);
+
 function startTimer() {
     if (mutations.value.timer && timerRef.value) {
         timerRef.value.start();
@@ -84,6 +86,12 @@ function correct() {
 // take off lives or add one to the incorrect counter
 function incorrect() {
     incorrectAmount.value++;
+
+    // Trigger shake animation
+    incorrectAnimation.value = true;
+    setTimeout(() => {
+        incorrectAnimation.value = false;
+    }, 500);
 
     if (mutations.value.threeLives == true) {
         if (incorrectAmount.value == 3) {
@@ -252,7 +260,7 @@ onMounted(() => {
                 <p id="heart-3">❤︎</p>
             </div>
             <p v-if="showKanaRemaining && !mutations.infinite" class="opacity-50 text-center">kana remaining: {{ practiceArray.length - correctAmount }}</p>
-            <div class="border-4 border-b-8 border-accent rounded-4xl px-20 py-20 flex justify-center items-center">
+            <div :class="{ 'animate-shake': incorrectAnimation }" class="border-4 border-b-8 border-accent rounded-4xl px-20 py-20 flex justify-center items-center">
                 <div class="flex flex-col items-center justify-center">
                     <p class="font-NSJ text-9xl font-bold text-accent" id="kana">{{ selectedKana }}</p>
                     <p v-if="mutations.showRomaji" class="text-md mt-4 opacity-50 tracking-wide" id="romaji">{{ selectedRomaji }}</p>
