@@ -1,7 +1,7 @@
 <script setup>
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
-import { shuffle } from '@/utils';
+import { shuffle, shoot } from '@/utils';
 
 import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
@@ -70,10 +70,14 @@ function correct() {
     if (currentKanaIndex.value >= practiceArray.length - 1) {
         correctAmount.value++;
         setTimeout(() => {
-            alert('you are done. congrats!');
+            // confetti
+            setTimeout(shoot, 0);
+            setTimeout(shoot, 100);
+            setTimeout(shoot, 200);
+
             currentKanaIndex.value = 0;
             selectMode(mode.value);
-        }, 100)
+        }, 100);
     } else {
         correctAmount.value++;
         currentKanaIndex.value++;
