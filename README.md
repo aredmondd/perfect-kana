@@ -51,7 +51,7 @@ npm run build
 ## Roadmap
 here are some things i still want to implement into perfect kana
 - [ ] practice modes with just dakuten & handakuten
-- [ ] animations for incorrect & correct answers
+- [x] animations for incorrect & correct answers
 - [ ] store a high score for infinite mode & timer mode
 - [ ] achievements
 - [ ] user stats (total kana practiced, worst kana, etc)

@@ -6,7 +6,6 @@
     });
 
     const input = ref('');
-    const borderClass = ref('border-text bg-transparent bg-opacity-100');
 
     const emit = defineEmits(["correct", "incorrect", "start-timer"]);
 
@@ -14,18 +13,14 @@
         const text = input.value.trim();
 
         if (text === props.currentRomaji || text === props.currentKana) {
-            borderClass.value = 'border-success text-success';
             setTimeout(() => {
-                borderClass.value = "border-text text-text";
                 input.value = '';
                 emit("correct");
             }, 150);
 
         } else {
-            borderClass.value = 'border-failure text-failure';
 
             setTimeout(() => {
-                borderClass.value = "border-text text-text";
                 input.value = '';
                 emit("incorrect");
             }, 150);
@@ -41,7 +36,6 @@
         v-model="input"
         size="33"
         class="border-b-1 focus:outline-none mt-12 text-center opacity-50 transition-colors duration-250 text-lg"
-        :class="borderClass"
         @input="emit('start-timer')"
         autocomplete="off"
         data-1p-ignore
