@@ -19,7 +19,13 @@
             }, 150);
 
         } else {
-
+            if ((props.currentKana == 'ぢ' && text == 'di') || (props.currentKana == 'づ' && text == 'du')) {
+                setTimeout(() => {
+                    input.value = '';
+                    emit("correct");
+                }, 150);
+                return;
+            }
             setTimeout(() => {
                 input.value = '';
                 emit("incorrect");
