@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router'
 import { onMounted, onUnmounted, ref } from 'vue';
 import themes from '@/data/themes';
-import applyTheme from '@/applyTheme';
+import { applyTheme } from '@/utils';
 import { eventBus } from '@/eventBus';
 
 let showNavbar = ref(true);

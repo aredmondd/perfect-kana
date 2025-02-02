@@ -1,12 +1,15 @@
 <script setup>
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
+import { shuffle } from '@/utils';
 
 import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
 
 import { ref, onMounted } from 'vue';
 import { eventBus } from '@/eventBus';
+
+let practiceArray = hiraganaData.hiraganaKey;
 
 const mode = ref('hiragana');
 const mutations = ref({
@@ -19,18 +22,13 @@ const mutations = ref({
 });
 const zen = ref(false);
 
-// the current array that the user will loop over/through, and the current 
-let practiceArray = hiraganaData.hiraganaKey;
 const selectedKana = ref('');
 const selectedRomaji = ref('');
 
-// track the amount incorrect/correct
 const correctAmount = ref(0);
 const incorrectAmount = ref(0);
 
-// track where we are in non-infinite modes
 const currentKanaIndex = ref(0);
-
 const timerRef = ref(null);
 
 const showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
@@ -58,7 +56,7 @@ function generateNewRandomKana() {
 };
 
 // iterate to the next kana on regular modes
-function nextKana() {
+function iterateToNextKana() {
     if (mutations.value.infinite) {
         generateNewRandomKana();
         return;
@@ -79,7 +77,7 @@ function correct() {
     } else {
         correctAmount.value++;
         currentKanaIndex.value++;
-        nextKana();
+        iterateToNextKana();
     }
 }
 
@@ -87,7 +85,6 @@ function correct() {
 function incorrect() {
     incorrectAmount.value++;
 
-    // Trigger shake animation
     incorrectAnimation.value = true;
     setTimeout(() => {
         incorrectAnimation.value = false;
@@ -135,7 +132,7 @@ function selectMode(newMode) {
         updatePracticeArray();
     }
 
-    nextKana();
+    iterateToNextKana();
 }
 
 function selectMutation(newMutation) {
@@ -167,23 +164,7 @@ function selectMutation(newMutation) {
     localStorage.setItem('mode', mode.value);
     practiceArray = shuffle(practiceArray);
     currentKanaIndex.value = 0;
-    nextKana();
-}
-
-// shuffle an array (is 2d in this case)
-function shuffle(array) {
-    let currentIndex = array.length
-    
-    while (currentIndex != 0) {
-        let randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]
-        ];
-    }
-
-    return array;
+    iterateToNextKana();
 }
 
 function updatePracticeArray() {
@@ -237,13 +218,12 @@ function handleKeyDown(event) {
     }
 }
 
-
 onMounted(() => {
     selectMode(localStorage.getItem('mode') ? localStorage.getItem('mode') : 'hiragana');
     window.addEventListener('keydown', handleKeyDown);
 
-    showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
-    showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
+    showKanaRemaining.value = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
+    showAmountCompleted.value = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
 });
 </script>
 

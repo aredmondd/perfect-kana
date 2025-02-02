@@ -2,7 +2,7 @@
 import { ref, onMounted} from 'vue';
 import ThemeCard from './ThemeCard.vue';
 import themes from '../data/themes';
-import applyTheme from '@/applyTheme';
+import { applyTheme } from '@/utils';
 
 let localStorageThemeName = ref(JSON.parse(localStorage.getItem("theme")).name);
 
