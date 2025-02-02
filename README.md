@@ -1,6 +1,6 @@
 # perfect-kana
 
-perfect kana is a kana learning/practicing web app designed, built, and published in 1 week. <br> check out the live version [here](www.perfect-kana.com)!
+perfect kana is a kana learning/practicing web app designed, built, and published in 1 week. <br> check out the live version [here](https://www.perfect-kana.com)!
 
 ## Why is perfect kana?
 perfect kana aims to make learning kana easy, fun, and most importantly - customizable. With 3 modes, 6 mutations, and over 40 themes, perfect kana offers THE most customizable way to learn kana.
@@ -57,7 +57,7 @@ here are some things i still want to implement into perfect kana (in order of im
 - [ ] practice modes with just dakuten & handakuten
 - [ ] select columns of kana you want to appear
 - [ ] mistakes mode (practice kana you suck at)  
-- [ ] custom themes + fonts
+- [ ] custom themes + fonts  
 ~~zen mode~~ <br>
 ~~randomized theme~~ <br>
 ~~animations for incorrect & correct answers~~ <br>
