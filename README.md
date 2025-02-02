@@ -59,7 +59,7 @@ here are some things i still want to implement into perfect kana
 - [ ] select columns of kana you want to appear
 - [ ] custom themes + fonts
 - [x] zen mode
-- [ ] randomized theme
+- [x] randomized theme
 - [ ] mistakes mode (practice kana you suck at)
 
 ## Inspirations
