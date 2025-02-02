@@ -12,20 +12,13 @@
     function formSubmit() {
         const text = input.value.trim();
 
-        if (text === props.currentRomaji || text === props.currentKana) {
+        if ((text === props.currentRomaji || text === props.currentKana) || (props.currentKana == 'ぢ' && text == 'di') || (props.currentKana == 'づ' && text == 'du')) {
             setTimeout(() => {
                 input.value = '';
                 emit("correct");
             }, 150);
 
         } else {
-            if ((props.currentKana == 'ぢ' && text == 'di') || (props.currentKana == 'づ' && text == 'du')) {
-                setTimeout(() => {
-                    input.value = '';
-                    emit("correct");
-                }, 150);
-                return;
-            }
             setTimeout(() => {
                 input.value = '';
                 emit("incorrect");
