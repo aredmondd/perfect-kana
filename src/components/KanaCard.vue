@@ -1,15 +1,15 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
-import { eventBus } from '@/eventBus';
 
 import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
 
-// if the user has never been to the site assume they wants basic basic hiragana
-let mode = ref('hiragana');
-let mutations = ref({
+import { ref, onMounted } from 'vue';
+import { eventBus } from '@/eventBus';
+
+const mode = ref('hiragana');
+const mutations = ref({
     threeLives: false,
     infinite: false,
     showRomaji: false,
@@ -17,26 +17,26 @@ let mutations = ref({
     dakuten: false,
     hanDakuten: false,
 });
-let zen = ref(false);
+const zen = ref(false);
 
 // the current array that the user will loop over/through, and the current 
 let practiceArray = hiraganaData.hiraganaKey;
-let selectedKana = ref('');
-let selectedRomaji = ref('');
+const selectedKana = ref('');
+const selectedRomaji = ref('');
 
 // track the amount incorrect/correct
-let correctAmount = ref(0);
-let incorrectAmount = ref(0);
+const correctAmount = ref(0);
+const incorrectAmount = ref(0);
 
 // track where we are in non-infinite modes
-let currentKanaIndex = ref(0);
+const currentKanaIndex = ref(0);
 
 const timerRef = ref(null);
 
-let showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
-let showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
+const showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
+const showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
 
-let incorrectAnimation = ref(false);
+const incorrectAnimation = ref(false);
 
 function startTimer() {
     if (mutations.value.timer && timerRef.value) {
