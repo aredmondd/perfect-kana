@@ -267,8 +267,8 @@ onMounted(() => {
         <div :class="[mutations.infinite ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('infinite')">infinite</div>
         <div :class="[mutations.showRomaji ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('show romaji')">show romaji</div>
         <div :class="[mutations.timer ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('timer')">timer</div>
-        <div :class="[mutations.dakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('dakuten')">dakuten</div>
-        <div :class="[mutations.hanDakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('hanDakuten')">han-dakuten</div>
+        <div :class="[mutations.dakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('dakuten')">w/ dakuten</div>
+        <div :class="[mutations.hanDakuten ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out consistent-font" @click="selectMutation('hanDakuten')">w/ handakuten</div>
     </div>
 
     <div class="mt-12 flex items-center gap-14">

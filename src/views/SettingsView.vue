@@ -14,8 +14,10 @@ watch(showAmountCompleted, (newValue) => {
 });
 
 function clearLocalStorage() {
-    localStorage.clear();
-    location.reload(true);
+    if (confirm("Are you absolutely, positively, 100000% sure?\nYou can never EVER get this data back...")) {
+        localStorage.clear();
+        location.reload(true);
+    }
 }
 </script>
 

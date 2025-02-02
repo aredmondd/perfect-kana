@@ -49,15 +49,15 @@ npm run build
 ```
 
 ## Roadmap
-here are some things i still want to implement into perfect kana
-- [ ] practice modes with just dakuten & handakuten
+here are some things i still want to implement into perfect kana (in order of importance)
 - [ ] store a high score for infinite mode & timer mode
-- [ ] achievements
 - [ ] user stats (total kana practiced, worst kana, etc)
+- [ ] achievements
 - [ ] secret unlockable themes (practice 1000 kana, sub 1-minute for hiragana, etc.)
+- [ ] practice modes with just dakuten & handakuten
 - [ ] select columns of kana you want to appear
-- [ ] custom themes + fonts
 - [ ] mistakes mode (practice kana you suck at)  
+- [ ] custom themes + fonts
 ~~zen mode~~ <br>
 ~~randomized theme~~ <br>
 ~~animations for incorrect & correct answers~~ <br>
