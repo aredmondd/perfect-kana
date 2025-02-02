@@ -218,7 +218,7 @@ function updatePracticeArray() {
         }
     }
 
-  practiceArray = [].concat(...arrays);
+  practiceArray = shuffle([].concat(...arrays));
 }
 
 function handleKeyDown(event) {

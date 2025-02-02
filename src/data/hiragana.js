@@ -68,11 +68,6 @@ const dakuten = [
     ["ぶ", "bu"],
     ["べ", "be"],
     ["ぼ", "bo"],
-    ["ぱ", "pa"],
-    ["ぴ", "pi"],
-    ["ぷ", "pu"],
-    ["ぺ", "pe"],
-    ["ぽ", "po"]
 ];
 
 const handakuten = [
