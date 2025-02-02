@@ -1,6 +1,5 @@
 <script setup>
 import KanaCard from '@/components/KanaCard.vue';
-import InputBox from '@/components/InputBox.vue';
 </script>
 
 <template>

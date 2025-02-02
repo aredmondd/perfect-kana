@@ -9,6 +9,12 @@ let showNavbar = ref(true);
 
 onMounted(() => {
     applyTheme(localStorage.getItem("theme") ? JSON.parse(localStorage.getItem("theme")) : themes['mint']);
+    if (!localStorage.getItem("showAmountCompleted")) {
+        localStorage.setItem("showAmountCompleted", true);
+    }
+    if (!localStorage.getItem("showKanaRemaining")) {
+        localStorage.setItem("showKanaRemaining", true);
+    }
     eventBus.on('toggle-zen', (isZenMode) => {
         showNavbar.value = !isZenMode;
     });

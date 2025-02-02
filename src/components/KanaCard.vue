@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import hiraganaData from '@/data/hiragana';
 import katakanaData from '@/data/katakana';
 import { eventBus } from '@/eventBus';
@@ -8,7 +8,6 @@ import InputBox from './InputBox.vue';
 import Timer from '@/components/Timer.vue';
 
 // if the user has never been to the site assume they wants basic basic hiragana
-let theme = ref(JSON.parse(localStorage.getItem('theme')).name);
 let mode = ref('hiragana');
 let mutations = ref({
     threeLives: false,
@@ -33,6 +32,9 @@ let incorrectAmount = ref(0);
 let currentKanaIndex = ref(0);
 
 const timerRef = ref(null);
+
+let showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
+let showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
 
 function startTimer() {
     if (mutations.value.timer && timerRef.value) {
@@ -227,12 +229,15 @@ function handleKeyDown(event) {
 onMounted(() => {
     selectMode(localStorage.getItem('mode') ? localStorage.getItem('mode') : 'hiragana');
     window.addEventListener('keydown', handleKeyDown);
+
+    showKanaRemaining = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
+    showAmountCompleted = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
 });
 </script>
 
 <template>
     <div class="flex gap-24 justify-between items-center" style="min-width: 300px;">
-        <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ correctAmount }}</p>
+        <p v-if="showAmountCompleted" class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ correctAmount }}</p>
         <div class="flex flex-col gap-6">
             <div v-if="mutations.timer" class="text-center">
                 <Timer ref="timerRef"/>
@@ -242,7 +247,7 @@ onMounted(() => {
                 <p id="heart-2">❤︎</p>
                 <p id="heart-3">❤︎</p>
             </div>
-            <p v-if="!mutations.infinite" class="opacity-50 text-center">kana remaining: {{ practiceArray.length - correctAmount }}</p>
+            <p v-if="showKanaRemaining && !mutations.infinite" class="opacity-50 text-center">kana remaining: {{ practiceArray.length - correctAmount }}</p>
             <div class="border-4 border-b-8 border-accent rounded-4xl px-20 py-20 flex justify-center items-center">
                 <div class="flex flex-col items-center justify-center">
                     <p class="font-NSJ text-9xl font-bold text-accent" id="kana">{{ selectedKana }}</p>
@@ -250,22 +255,10 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <p class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ incorrectAmount }}</p>
+        <p v-if="showAmountCompleted" class="opacity-25 p-2 text-right" style="min-width: 40px;">{{ incorrectAmount }}</p>
     </div>
 
     <InputBox @start-timer="startTimer" @correct="correct" @incorrect="incorrect" :currentKana="selectedKana" :currentRomaji="selectedRomaji"/>
-
-    <!-- <div class="grid grid-cols-3 gap-4 text-center mt-6">
-        <div :class="[mode === 'hiragana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
-        <div :class="[mode === 'katakana' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('katakana')">katakana</div>
-        <div :class="[mode === 'both' ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('both')">both</div>
-        <div :class="[mutations.threeLives ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('3 lives')">3 lives</div>
-        <div :class="[mutations.infinite ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('infinite')">infinite</div>
-        <div :class="[mutations.showRomaji ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('show romaji')">show romaji</div>
-        <div :class="[mutations.timer ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('timer')">timer</div>
-        <div :class="[mutations.dakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('dakuten')">dakuten</div>
-        <div :class="[mutations.hanDakuten ? 'text-accent opacity-100' : '']" class="opacity-50 border-1 px-4 py-1 rounded-xl hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMutation('hanDakuten')">han-dakuten</div>
-    </div> -->
 
     <div v-if="!zen" class="flex gap-6 mt-10 rounded-md px-6 py-1">
         <div :class="[mode === 'hiragana' ? 'text-accent opacity-100 font-bold' : '']" class="opacity-50 hover:text-accent hover:opacity-100 hover:cursor-pointer transition-all duration-200 ease-in-out" @click="selectMode('hiragana')">hiragana</div>
