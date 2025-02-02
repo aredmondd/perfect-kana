@@ -226,8 +226,8 @@ onMounted(() => {
     selectMode(localStorage.getItem('mode') ? localStorage.getItem('mode') : 'hiragana');
     window.addEventListener('keydown', handleKeyDown);
 
-    showKanaRemaining.value = ref(JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true);
-    showAmountCompleted.value = ref(JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true);
+    showKanaRemaining.value = JSON.parse(localStorage.getItem("showKanaRemaining")) ?? true;
+    showAmountCompleted.value = JSON.parse(localStorage.getItem("showAmountCompleted")) ?? true;
 });
 </script>
 
